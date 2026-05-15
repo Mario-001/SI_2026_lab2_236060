@@ -4,7 +4,7 @@
 [searchBookByTitle.jpg](searchBookByTitle.jpg)
 
 <b>borrowBook</b>
-
+    
 [borrowBook.jpg](borrowBook.jpg)
 
 <h3> Цикломатска комплексност </h3> Цикломатската комплексност за "searchBookByTitle" ми излезе дека е <b>4</b> и тоа го добив со помош на формулата <b>CC = E - N + 2P</b>, каде што <b>N</b> добив дека е 12 што го претставува бројот на <b>Nodes</b>, <b>Е</b> што претставува <b>Edges</b> добив дека е 14, и <b> P </b> што претсатува number of connected components што добив дека е 1 , резултатот беше добиен на следниот начин -> <b>((14 - 12) + (2 * 1)) = 4</b>.  
