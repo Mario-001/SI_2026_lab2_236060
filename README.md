@@ -1,9 +1,7 @@
-# Проект: Систем за управување со библиотеки
-**Автор:** Марио Димески (Индукс: 236060)
 
----
+# Марио Димески (236060)
 
-## 🔍 Анализа на функциите
+##  Анализа на функциите
 
 ### 1. searchBookByTitle
 Оваа функција овозможува пребарување на достапни книги според нивниот наслов.
@@ -15,9 +13,9 @@
 </p>
 
 **Цикломатска комплексност:**
-Наместо броење јазли и гранки, наједноставниот начин е преку предикатните јазли ($P$):
+Цикломатската комплексност за првиот граф го решив така што го зедов и ги изброив предикатните јазли  ($P$) и воедно ја искористив формулата **CC = P + 1**:
 * **P = 5** (if за празен наслов, for циклус, два услови во if со &&, и последен if за празна листа).
-* **M = P + 1 = 6**
+* **CC = P + 1 = 6**
 
 ---
 
@@ -31,16 +29,114 @@
 </p>
 
 **Цикломатска комплексност:**
+Цикломатската комплексност ја пресметав на истиот начин каде што ги броев предикатните јазли и ја искористив истата формула **CC = P + 1**:
 * **P = 6** (|| кај наслов/автор, for циклус, && кај наслов/автор во циклусот, и if за статус на изнајмување).
-* **M = P + 1 = 7**
+* **CC = P + 1 = 7**
 
 ---
+### Тест случаи според критериумот Every Statement
+#### Функцијата - searchBookByTitle
+**Тест 1** :
+ 
+ ```java
+ /**  
+ * Case 1: empty title -> expected exception
+ */ 
+ assertThrows(IllegalArgumentException.class, () -> library.searchBookByTitle(""));
+ ```
+ 
+со овај тест пример ги покриваме линиите од **57** - **58** односно
+```java
+57 if (title.isEmpty() || author.isEmpty()) {
+58  throw new IllegalArgumentException("Invalid search query");
+}
+```
+### Тест 2:
+```java
+/**  
+ * Case 2: searching for 1 book -> expected book to be found 
+ */
+ assertEquals("Clean Code", bookList.get(0).getTitle());
+```
 
-## 📊 Преглед на комплексност
+со овај тест ги поркиваме линиите **57 па 60 - 63 па 66 па 69** 
+```java
+57 if (title.isEmpty())
+```
 
-| Функција | Број на одлуки (P) | Цикломатска комплексност (M) | Потребни тест случаи |
-| :--- | :---: | :---: | :---: |
-| `searchBookByTitle` | 5 | **6** | 6 |
-| `borrowBook` | 6 | **7** | 7 |
+```java
+60 List<Book> results = new ArrayList<Book>();  
+61 for (Book book : books) {  
+62    if (book.getTitle().equalsIgnoreCase(title) && !book.isBorrowed()) {  
+63        results.add(book);
+        }
+}
+```
 
-> **Забелешка:** Пресметките се направени со анализа на предикатните јазли во Java кодот, земајќи ги предвид логичките оператори `&&` и `||` како точки на разгранување.
+```java
+66 if (results.isEmpty()) {  
+67    return null;  
+}
+```
+
+### Тетс 3
+```java
+/**  
+ * Case 3: Empty library with no books -> expected null 
+ */
+ assertNull(bookList2);
+```
+
+со овај тест ги покриваме линиите **57 па 60 - 61 па 66 - 67**
+```java
+57 if (title.isEmpty() || author.isEmpty()){  
+    throw new IllegalArgumentException("Invalid search query");  
+}
+```
+
+```java
+60 List<Book> results = new ArrayList<Book>();  
+61 for (Book book : books) {  
+    if (book.getTitle().equalsIgnoreCase(title) && !book.isBorrowed()) {  
+        results.add(book);  
+    }  
+}
+```
+
+```java
+66 if (results.isEmpty()) {  
+67    return null;  
+}
+```
+
+### Тетс 4
+```java
+/**  
+ * Case 4: Searching for a book that doesn't exist -> expected null
+ */
+ assertNull(bookList3);
+```
+
+со овај тест ги покриваме линиите **57 па 60 - 62 па 66 - 67**
+```java
+57 if (title.isEmpty() || author.isEmpty()){  
+    throw new IllegalArgumentException("Invalid search query");  
+}
+```
+
+```java
+60 List<Book> results = new ArrayList<Book>();  
+61 for (Book book : books) {  
+62    if (book.getTitle().equalsIgnoreCase(title) && !book.isBorrowed()) {  
+        results.add(book);  
+    }  
+}
+```
+
+```java
+66 if (results.isEmpty()) {  
+67    return null;  
+}
+```
+
+
