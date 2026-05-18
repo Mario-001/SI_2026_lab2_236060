@@ -35,8 +35,8 @@
 
 ---
 ### Тест случаи според критериумот Every Statement
-#### Функцијата - searchBookByTitle
-**Тест 1** :
+### Функцијата - searchBookByTitle
+### Тест 1 :
  
  ```java
  /**  
@@ -51,6 +51,7 @@
 58  throw new IllegalArgumentException("Invalid search query");
 }
 ```
+---
 ### Тест 2:
 ```java
 /**  
@@ -78,8 +79,8 @@
 67    return null;  
 }
 ```
-
-### Тетс 3
+---
+### Тест 3
 ```java
 /**  
  * Case 3: Empty library with no books -> expected null 
@@ -108,8 +109,8 @@
 67    return null;  
 }
 ```
-
-### Тетс 4
+---
+### Тест 4
 ```java
 /**  
  * Case 4: Searching for a book that doesn't exist -> expected null
@@ -138,8 +139,10 @@
 67    return null;  
 }
 ```
-#### Функцијата - searchBookByTitle
+---
+### Тест случаи според критериумот Every Branch
 
+### Функцијата - searchBookByTitle
 
 Оваа функција 	овозможува позајмување на книга доколку не е веќе позајмена
 
@@ -155,7 +158,8 @@ assertThrows(IllegalArgumentException.class,() -> library.borrowBook("",""));
 if (title.isEmpty() || author.isEmpty()){  
     throw new IllegalArgumentException("Invalid search query");  
 }
-``` 
+```
+--- 
 ### Тест 2
 ```java
 /**  
@@ -190,7 +194,7 @@ if (!book.isBorrowed()) {
     throw new RuntimeException("Book is already borrowed.");  
 }
 ```
-
+---
 ### Тест 3
 ```java
 /**  
@@ -206,6 +210,7 @@ if (title.isEmpty() || author.isEmpty()){
 ```
 Добиваме **false** на втората гранка, и со тоа не стасуваме воопшто до третата гранка.
 
+---
 ### Тест 4
 
 ```java
@@ -241,4 +246,4 @@ if (!book.isBorrowed()) {
     throw new RuntimeException("Book is already borrowed.");  
 }
 ```
-### Потребно е минимум 4 тест случаи за да се покрие функцијата "borrowBook" а воедно да ги исполлнува условите за "Every Branch" критериумот
+### Потребно е минимум 4 тест случаи за да се покрие функцијата "borrowBook" а воедно ги исполлнува условите за "Every Branch" критериумот
