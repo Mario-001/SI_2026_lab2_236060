@@ -355,3 +355,6 @@ assertNull(library.searchBookByTitle("Clean Code"));
 
 ---
 **Заклучок:** потребно е минимум 4 тестови за да се исполни критериумот Multiple Condition за функцијата `searchBookByTitle`
+
+<br>
+````</Book></Book></Book></Book></Book></Book>
