@@ -138,5 +138,107 @@
 67    return null;  
 }
 ```
+#### Функцијата - searchBookByTitle
 
 
+Оваа функција 	овозможува позајмување на книга доколку не е веќе позајмена
+
+### Тест 1
+```java
+/**  
+ * Case 1: empty title and author -> expected exception
+ */
+assertThrows(IllegalArgumentException.class,() -> library.borrowBook("",""));
+```
+Со овај тест добиваме **true** на првата гранка:
+```java
+if (title.isEmpty() || author.isEmpty()){  
+    throw new IllegalArgumentException("Invalid search query");  
+}
+``` 
+### Тест 2
+```java
+/**  
+ * Case 2: borrowing book -> expected null meaning that book is borrowed */library.borrowBook("Clean Code", "Robert C. Martin");  
+  
+assertNull(library.searchBookByTitle("Clean Code"));
+```
+Со овај тест добиваме **false** на првата гранка
+```java
+if (title.isEmpty() || author.isEmpty()){  
+    throw new IllegalArgumentException("Invalid search query");  
+}
+```
+Добиваме **true** на втората гранка:
+```java
+if (book.getTitle().equalsIgnoreCase(title) && book.getAuthor().equalsIgnoreCase(author)) {  
+//  if (!book.isBorrowed()) {  
+//      book.setBorrowed(true);  
+//      System.out.println("Borrowed successfully");  
+//   } else {  
+//     throw new RuntimeException("Book is already borrowed.");  
+//   }  
+     return;  
+    }  
+```
+Добиваме **true** на третата гранка:
+```java
+if (!book.isBorrowed()) {  
+    book.setBorrowed(true);  
+    System.out.println("Borrowed successfully");  
+} else {  
+    throw new RuntimeException("Book is already borrowed.");  
+}
+```
+
+### Тест 3
+```java
+/**  
+ * Case 3: borrowing a book that doesn't exist -> expected exception 
+ */
+assertThrows(RuntimeException.class, () -> library.borrowBook("xyz","xyz"));
+```
+Со овај тест добиваме **false** на првата гранка:
+```java
+if (title.isEmpty() || author.isEmpty()){  
+    throw new IllegalArgumentException("Invalid search query");  
+}
+```
+Добиваме **false** на втората гранка, и со тоа не стасуваме воопшто до третата гранка.
+
+### Тест 4
+
+```java
+/**  
+ * Case 4: borrowing a book that is already borrowed -> expected exception
+ */
+assertThrows(RuntimeException.class,() -> library.borrowBook("Clean Code","Robert C. Martin"));
+```
+Со овај тест добиваме **false** на првата гранка:
+```java
+if (title.isEmpty() || author.isEmpty()){  
+    throw new IllegalArgumentException("Invalid search query");  
+}
+```
+Добиваме **true** на втората гранка:
+```java
+if (book.getTitle().equalsIgnoreCase(title) && book.getAuthor().equalsIgnoreCase(author)) {  
+//  if (!book.isBorrowed()) {  
+//      book.setBorrowed(true);  
+//      System.out.println("Borrowed successfully");  
+//   } else {  
+//     throw new RuntimeException("Book is already borrowed.");  
+//   }  
+     return;  
+    }  
+```
+Добиваме **false** на третата гранка:
+```java
+if (!book.isBorrowed()) {  
+    book.setBorrowed(true);  
+    System.out.println("Borrowed successfully");  
+} else {  
+    throw new RuntimeException("Book is already borrowed.");  
+}
+```
+### Потребно е минимум 4 тест случаи за да се покрие функцијата "borrowBook" а воедно да ги исполлнува условите за "Every Branch" критериумот
