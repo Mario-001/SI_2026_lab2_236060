@@ -1,16 +1,142 @@
-# Mario Dimeski 236060
-<b>SearchBookByTitle</b>
 
-[searchBookByTitle.jpg](searchBookByTitle.jpg)
+# Марио Димески (236060)
 
-<b>borrowBook</b>
-    
-[borrowBook.jpg](borrowBook.jpg)
+##  Анализа на функциите
 
-<h3> Цикломатска комплексност </h3> Цикломатската комплексност за "searchBookByTitle" ми излезе дека е <b>4</b> и тоа го добив со помош на формулата <b>CC = E - N + 2P</b>, каде што <b>N</b> добив дека е 12 што го претставува бројот на <b>Nodes</b>, <b>Е</b> што претставува <b>Edges</b> добив дека е 14, и <b> P </b> што претсатува number of connected components што добив дека е 1 , резултатот беше добиен на следниот начин -> <b>((14 - 12) + (2 * 1)) = 4</b>.  
+### 1. searchBookByTitle
+Оваа функција овозможува пребарување на достапни книги според нивниот наслов.
 
-<br>
+<p align="center">
+  <img src="searchBookByTitle.jpg" width="600" alt="searchBookByTitle Diagram">
+  <br>
+  <i>Слика 1: Граф на контролен тек за searchBookByTitle</i>
+</p>
 
-Цикломатската комплексност за "borrowBook" ја решив со помош на истата формула каде што овај пат <b>Nodes</b> добив дека се 11, за <b>Edges</b> добив 14, и на крајот <b>P</b> го добив дека е 1, крајното решение изгледа вака <b>CC = (14 - 11 + (2*1)) = 5.</b>
+**Цикломатска комплексност:**
+Цикломатската комплексност за првиот граф го решив така што го зедов и ги изброив предикатните јазли  ($P$) и воедно ја искористив формулата **CC = P + 1**:
+* **P = 5** (if за празен наслов, for циклус, два услови во if со &&, и последен if за празна листа).
+* **CC = P + 1 = 6**
+
+---
+
+### 2. borrowBook
+Функција за изнајмување на книга со проверка на автор и статус на достапност.
+
+<p align="center">
+  <img src="borrowBook.jpg" width="600" alt="borrowBook Diagram">
+  <br>
+  <i>Слика 2: Граф на контролен тек за borrowBook</i>
+</p>
+
+**Цикломатска комплексност:**
+Цикломатската комплексност ја пресметав на истиот начин каде што ги броев предикатните јазли и ја искористив истата формула **CC = P + 1**:
+* **P = 6** (|| кај наслов/автор, for циклус, && кај наслов/автор во циклусот, и if за статус на изнајмување).
+* **CC = P + 1 = 7**
+
+---
+### Тест случаи според критериумот Every Statement
+#### Функцијата - searchBookByTitle
+**Тест 1** :
+ 
+ ```java
+ /**  
+ * Case 1: empty title -> expected exception
+ */ 
+ assertThrows(IllegalArgumentException.class, () -> library.searchBookByTitle(""));
+ ```
+ 
+со овај тест пример ги покриваме линиите од **57** - **58** односно
+```java
+57 if (title.isEmpty() || author.isEmpty()) {
+58  throw new IllegalArgumentException("Invalid search query");
+}
+```
+### Тест 2:
+```java
+/**  
+ * Case 2: searching for 1 book -> expected book to be found 
+ */
+ assertEquals("Clean Code", bookList.get(0).getTitle());
+```
+
+со овај тест ги поркиваме линиите **57 па 60 - 63 па 66 па 69** 
+```java
+57 if (title.isEmpty())
+```
+
+```java
+60 List<Book> results = new ArrayList<Book>();  
+61 for (Book book : books) {  
+62    if (book.getTitle().equalsIgnoreCase(title) && !book.isBorrowed()) {  
+63        results.add(book);
+        }
+}
+```
+
+```java
+66 if (results.isEmpty()) {  
+67    return null;  
+}
+```
+
+### Тетс 3
+```java
+/**  
+ * Case 3: Empty library with no books -> expected null 
+ */
+ assertNull(bookList2);
+```
+
+со овај тест ги покриваме линиите **57 па 60 - 61 па 66 - 67**
+```java
+57 if (title.isEmpty() || author.isEmpty()){  
+    throw new IllegalArgumentException("Invalid search query");  
+}
+```
+
+```java
+60 List<Book> results = new ArrayList<Book>();  
+61 for (Book book : books) {  
+    if (book.getTitle().equalsIgnoreCase(title) && !book.isBorrowed()) {  
+        results.add(book);  
+    }  
+}
+```
+
+```java
+66 if (results.isEmpty()) {  
+67    return null;  
+}
+```
+
+### Тетс 4
+```java
+/**  
+ * Case 4: Searching for a book that doesn't exist -> expected null
+ */
+ assertNull(bookList3);
+```
+
+со овај тест ги покриваме линиите **57 па 60 - 62 па 66 - 67**
+```java
+57 if (title.isEmpty() || author.isEmpty()){  
+    throw new IllegalArgumentException("Invalid search query");  
+}
+```
+
+```java
+60 List<Book> results = new ArrayList<Book>();  
+61 for (Book book : books) {  
+62    if (book.getTitle().equalsIgnoreCase(title) && !book.isBorrowed()) {  
+        results.add(book);  
+    }  
+}
+```
+
+```java
+66 if (results.isEmpty()) {  
+67    return null;  
+}
+```
 
 
